@@ -196,6 +196,7 @@ function get_search_members($params) {
 	$s_miles          = $params['s_miles'];
 	$s_sitename       = $params['s_sitename'];
 	$s_county         = $params['s_county'];
+	$s_city           = $params['s_city'];
 	$limit            = $params['per_page'];
 	$miles_vals       = $params['miles'];
 
@@ -203,17 +204,50 @@ function get_search_members($params) {
 	{
 		if (strlen($s_county)) 
 		{
-			$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID LEFT JOIN %susermeta um3 ON um3.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'site_name' AND um2.meta_value LIKE '%s' AND (um3.meta_key = 'address3' OR um3.meta_key = 'address4') AND um3.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_sitename.'%', '%'.$s_county.'%', $limit));
+			if(strlen($s_city))
+			{
+				$smembers = $wpdb->get_results(
+					sprintf(
+						"SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID LEFT JOIN %susermeta um3 ON um3.user_id = u.ID LEFT JOIN %susermeta um4 ON um4.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'site_name' AND um2.meta_value LIKE '%s' AND (um3.meta_key = 'address3' OR um3.meta_key = 'address4') AND um3.meta_value LIKE '%s' AND (um4.meta_key = 'address3' OR um4.meta_key = 'address4') AND um4.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", 
+						$wpdb->prefix, 
+						$wpdb->prefix, 
+						$wpdb->prefix, 
+						$wpdb->prefix, 
+						$wpdb->prefix,
+						'%subscriber%', 
+						'%s2member_level%', 
+						'%'.$s_sitename.'%', 
+						'%'.$s_county.'%', 
+						'%'.$s_city.'%', 
+						$limit));
+			}
+			else
+			{
+				$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID LEFT JOIN %susermeta um3 ON um3.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'site_name' AND um2.meta_value LIKE '%s' AND (um3.meta_key = 'address3' OR um3.meta_key = 'address4') AND um3.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_sitename.'%', '%'.$s_county.'%', $limit));
+			}
+			
 		} 
 		else 
 		{
-			$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'site_name' AND um2.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_sitename.'%', $limit));
+			if(strlen($s_city))
+			{
+				$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID LEFT JOIN %susermeta um3 ON um3.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'site_name' AND um2.meta_value LIKE '%s' AND (um3.meta_key = 'address3' OR um3.meta_key = 'address4') AND um3.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_sitename.'%', '%'.$s_city.'%', $limit));
+			}
+			else
+			{
+				$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'site_name' AND um2.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_sitename.'%', $limit));
+			}
+			
 		}
 	} 
 	else if (strlen($s_county)) 
 	{
 		$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND (um2.meta_key = 'address3' OR um2.meta_key = 'address4') AND um2.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_county.'%', $limit));
 	} 
+	else if(strlen($s_city))
+	{
+		$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND (um2.meta_key = 'address3' OR um2.meta_key = 'address4') AND um2.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_city.'%', $limit));
+	}
 	else if (strlen($s_postcode)) 
 	{
 		$s_postcode = str_replace(' ', '', $s_postcode);

@@ -9,32 +9,37 @@ global $wpdb, $caravan_theme_options, $wp_query;
 
 <?php
 $miles_vals = array(1, 5, 10, 20, 50);
-
+$s_miles = 10;
 $find_site_per_page = $caravan_theme_options['find_site_per_page'];
 if (!$find_site_per_page) { $find_site_per_page = 10; }
 
-if ($_GET['member-serach'] == 'true') {
+if ($_GET['member-serach'] == 'true') 
+{
 	$s_postcode = trim($_GET['s_postcode']);
-	$s_miles = (int)$_GET['s_miles'];
+	$s_miles    = (int)$_GET['s_miles'];
 	$s_sitename = trim($_GET['s_sitename']);
-	$s_county = trim($_GET['s_county']);
+	$s_county   = trim($_GET['s_county']);
+	$s_city     = trim($_GET['s_city']);
 
 	$params = array(
 		's_postcode' => $s_postcode,
-		's_miles' => $s_miles,
+		's_miles'    => $s_miles,
 		's_sitename' => $s_sitename,
-		's_county' => $s_county,
-		'per_page' => $find_site_per_page,
-		'miles' => $miles_vals
+		's_county'   => $s_county,
+		's_city'     => $s_city,
+		'per_page'   => $find_site_per_page,
+		'miles'      => $miles_vals
 	);
-	$members = get_search_members($params);
-	//var_dump($members);
+	$members = get_search_members($params);	
 
 	$members_data = array();
-	if ($members) {
-		foreach($members as $member) {
+	if ($members) 
+	{
+		foreach($members as $member) 
+		{
 			$member_customs = $wpdb->get_results(sprintf("SELECT * FROM %susermeta WHERE user_id = %s", $wpdb->prefix, $member->ID));
-			foreach($member_customs as $member_custom) {
+			foreach($member_customs as $member_custom) 
+			{
 				$members_data[$member->ID][$member_custom->meta_key] = $member_custom->meta_value;
 			}
 		}
@@ -93,8 +98,9 @@ var mtitles = new Array();
 			</div>
 			<p>Or search by sitename <span class="decoration">or</span> county:</p>
 			<div class="row-search site-name-row">
-				<input type="text" name="s_sitename" placeholder="Site name" value="<?php echo $_GET['s_sitename']; ?>">
-				<input type="text" name="s_county" placeholder="County" value="<?php echo $_GET['s_county']; ?>">
+				<input style="width: 230px" type="text" name="s_sitename" placeholder="Site name" value="<?php echo $_GET['s_sitename']; ?>">
+				<input style="width: 230px" type="text" name="s_county" placeholder="County" value="<?php echo $_GET['s_county']; ?>">
+				<input type="text" name="s_city" placeholder="City" value="<?php echo $_GET['s_city']; ?>">
 			  <input type="submit" value="Search">
 			</div>
 		</form>
