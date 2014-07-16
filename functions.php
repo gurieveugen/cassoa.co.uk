@@ -188,42 +188,59 @@ function get_postcodes_by_radius($postcode, $radius) {
 }
 
 function get_search_members($params) {
-	global $wpdb;
-	$members = array();
+	global            $wpdb;
+	$members          = array();
 	$member_postcodes = array();
-	$members_exists = array();
-	$s_postcode = $params['s_postcode'];
-	$s_miles = $params['s_miles'];
-	$s_sitename = $params['s_sitename'];
-	$s_county = $params['s_county'];
-	$limit = $params['per_page'];
-	$miles_vals = $params['miles'];
+	$members_exists   = array();
+	$s_postcode       = $params['s_postcode'];
+	$s_miles          = $params['s_miles'];
+	$s_sitename       = $params['s_sitename'];
+	$s_county         = $params['s_county'];
+	$limit            = $params['per_page'];
+	$miles_vals       = $params['miles'];
 
-	if (strlen($s_sitename)) {
-		if (strlen($s_county)) {
+	if (strlen($s_sitename)) 
+	{
+		if (strlen($s_county)) 
+		{
 			$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID LEFT JOIN %susermeta um3 ON um3.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'site_name' AND um2.meta_value LIKE '%s' AND (um3.meta_key = 'address3' OR um3.meta_key = 'address4') AND um3.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_sitename.'%', '%'.$s_county.'%', $limit));
-		} else {
+		} 
+		else 
+		{
 			$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'site_name' AND um2.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_sitename.'%', $limit));
 		}
-	} else if (strlen($s_county)) {
+	} 
+	else if (strlen($s_county)) 
+	{
 		$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND (um2.meta_key = 'address3' OR um2.meta_key = 'address4') AND um2.meta_value LIKE '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', '%'.$s_county.'%', $limit));
-	} else if (strlen($s_postcode)) {
+	} 
+	else if (strlen($s_postcode)) 
+	{
 		$s_postcode = str_replace(' ', '', $s_postcode);
-		if ($s_miles > 0) { // by radius
-			foreach ($miles_vals as $m) { // begin from small
-				if ($m <= $s_miles) {
+		if ($s_miles > 0) 
+		{ // by radius
+			foreach ($miles_vals as $m) 
+			{ // begin from small
+				if ($m <= $s_miles) 
+				{
 					$mpostcodes = get_postcodes_by_radius($s_postcode, $m);
-					foreach($mpostcodes as $mpostcode) {
-						if (!in_array($mpostcode, $member_postcodes)) {
+					foreach($mpostcodes as $mpostcode) 
+					{
+						if (!in_array($mpostcode, $member_postcodes)) 
+						{
 							$member_postcodes[] = $mpostcode;
 							$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'postcode' AND REPLACE(um2.meta_value, ' ', '') = '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', $mpostcode, $limit));
-							if ($smembers) {
-								foreach($smembers as $smember) {
-									if (!in_array($smember->ID, $members_exists)) {
+							if ($smembers) 
+							{
+								foreach($smembers as $smember) 
+								{
+									if (!in_array($smember->ID, $members_exists)) 
+									{
 										$members[] = $smember;
 										$members_exists[] = $smember->ID;
 									}
-									if (count($members) >= $limit) {
+									if (count($members) >= $limit) 
+									{
 										return $members;
 									}
 								}
@@ -232,13 +249,18 @@ function get_search_members($params) {
 					}
 				}
 			}
-		} else {
+		} 
+		else 
+		{
 			$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'postcode' AND REPLACE(um2.meta_value, ' ', '') = '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', $s_postcode, $limit));
 		}
 	}
-	if ($smembers) {
-		foreach($smembers as $smember) {
-			if (!in_array($smember->ID, $members_exists)) {
+	if ($smembers) 
+	{
+		foreach($smembers as $smember) 
+		{
+			if (!in_array($smember->ID, $members_exists)) 
+			{
 				$members[] = $smember;
 				$members_exists[] = $smember->ID;
 			}
