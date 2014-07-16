@@ -1,0 +1,149 @@
+/*-----member-search-form----------*/
+#member-search-form .jqTransformSelectWrapper {
+	width: 219px !important;
+	position:relative;
+	height: 46px;
+	background: #f2f2f2;
+	border:1px solid #ccc;
+	float:left;
+	margin:0;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
+
+#member-search-form .jqTransformSelectWrapper div span {
+	float: none;
+	width:170px !important;
+	position: absolute;
+	white-space: nowrap;
+	padding: 15px 37px 15px 13px;
+	overflow: hidden;
+	font-size: 15px;
+	line-height: 17px;
+	cursor:pointer;
+}
+
+#member-search-form .jqTransformSelectWrapper  a.jqTransformSelectOpen {
+	display: block;
+	position: absolute;
+	right: 10px;
+	top:12px;
+	width: 13px;
+	height: 23px;
+	background:url(../images/arrow-select.png) no-repeat;
+}
+
+#main #member-search-form .jqTransformSelectWrapper ul {
+	position: absolute;
+	width: 217px !important;
+	top: 46px;
+	left: 0px;
+	list-style: none;
+	background:#f2f2f2;
+	border:1px solid #ccc;
+	display: none;
+	margin: 0px;
+	padding: 0px;
+	overflow: auto;
+	overflow-y: auto;
+	z-index:10;
+}
+#main #member-search-form .jqTransformSelectWrapper ul li{
+	background:none;
+	padding:0;
+}
+#main #member-search-form .jqTransformSelectWrapper ul a {
+	border-top: solid 1px #CCC;
+	display: block;
+	padding: 5px;
+	text-decoration: none;
+	color:#333;
+	background-color: #FFF;
+	font-size: 12px;
+}
+
+#main #member-search-form .jqTransformSelectWrapper ul a.selected {
+	background: #EDEDED;
+	color: #333;
+}
+
+#main #member-search-form .jqTransformSelectWrapper ul a:hover,#main #member-search-form .jqTransformSelectWrapper ul a.selected:hover {
+	background:#EDEDED;
+	color: #333;
+}
+/*-----your-profile----------*/
+#your-profile .jqTransformSelectWrapper {
+	background:url(../images/bg-select.png) no-repeat;
+	width: 246px !important;
+	position:relative;
+	height: 36px;
+	border:none;
+	float:left;
+	margin:0 0 0 -3px;
+	padding:0;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
+
+#your-profile .jqTransformSelectWrapper div span {
+	float: none;
+	width:200px !important;
+	position: absolute;
+	white-space: nowrap;
+	padding:9px 10px 7px 13px;
+	overflow: hidden;
+	font-size: 15px;
+	line-height: 17px;
+	cursor:pointer;
+}
+
+#your-profile .jqTransformSelectWrapper  a.jqTransformSelectOpen {
+	display: block;
+	position: absolute;
+	right: -1px;
+	top:0px;
+	width: 27px;
+	height: 36px;
+	background:url(../images/arrow-select1.png) no-repeat;
+}
+
+#main #your-profile .jqTransformSelectWrapper ul {
+	position: absolute;
+	width: 215px !important;
+	top: 33px;
+	left: 6px;
+	list-style: none;
+	background:#f2f2f2;
+	border:1px solid #ccc;
+	display: none;
+	margin: 0px;
+	padding: 0px;
+	overflow: auto;
+	overflow-y: auto;
+	z-index:10;
+}
+#main #your-profile .jqTransformSelectWrapper ul li{
+	background:none;
+	padding:0;
+}
+#main #your-profile .jqTransformSelectWrapper ul a {
+	border-top: solid 1px #CCC;
+	display: block;
+	padding: 5px;
+	text-decoration: none;
+	color:#333;
+	background-color: #FFF;
+	font-size: 12px;
+}
+
+#main #your-profile .jqTransformSelectWrapper ul a.selected {
+	background: #EDEDED;
+	color: #333;
+}
+
+#main #your-profile .jqTransformSelectWrapper ul a:hover,#main #your-profile .jqTransformSelectWrapper ul a.selected:hover {
+	background:#EDEDED;
+	color: #333;
+}
+
+.jqTransformHidden {display: none;}
