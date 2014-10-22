@@ -14,3 +14,7 @@
 [21-May-2014 16:53:12 Europe/London] PHP Fatal error:  Call to undefined function get_header() in /home/cassoaco/public_html/wp-content/themes/caravan_storage/index.php on line 7
 [21-May-2014 16:53:13 Europe/London] PHP Fatal error:  Call to undefined function get_header() in /home/cassoaco/public_html/wp-content/themes/caravan_storage/index.php on line 7
 [03-Jun-2014 16:54:26 Europe/London] PHP Fatal error:  Call to undefined function get_header() in /home/cassoaco/public_html/wp-content/themes/caravan_storage/index.php on line 7
+[24-Jul-2014 14:04:28 Europe/London] PHP Fatal error:  Call to undefined function get_header() in /home/cassoaco/public_html/wp-content/themes/caravan_storage/index.php on line 7
+[27-Aug-2014 16:59:18 Europe/London] PHP Fatal error:  Call to undefined function get_header() in /home/cassoaco/public_html/wp-content/themes/caravan_storage/index.php on line 7
+[01-Sep-2014 12:11:34 Europe/London] PHP Fatal error:  Call to undefined function get_header() in /home/cassoaco/public_html/wp-content/themes/caravan_storage/index.php on line 7
+[13-Sep-2014 09:52:33 Europe/London] PHP Fatal error:  Call to undefined function get_header() in /home/cassoaco/public_html/wp-content/themes/caravan_storage/index.php on line 7

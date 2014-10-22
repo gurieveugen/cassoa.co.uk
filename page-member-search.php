@@ -8,7 +8,7 @@ global $wpdb, $caravan_theme_options, $wp_query;
 <?php get_header(); ?>
 
 <?php
-$miles_vals = array(1, 5, 10, 20, 50);
+$miles_vals = array(1, 5, 10, 20, 50); // , 20, 50
 $s_miles = 10;
 $find_site_per_page = $caravan_theme_options['find_site_per_page'];
 if (!$find_site_per_page) { $find_site_per_page = 10; }
@@ -45,6 +45,12 @@ if ($_GET['member-serach'] == 'true')
 		}
 	}
 }
+$members_data = sortMembersData($members_data, 'site_name');
+echo '<!-- <pre>';
+var_dump($members);
+echo '</pre> -->';
+
+
 ?>
 
 <script type="text/javascript">
@@ -81,7 +87,7 @@ var mtitles = new Array();
 	<?php if ( have_posts() ) : the_post(); ?>
 	<h1><?php the_title(); ?></h1>
 	<div class="form-enter-postcode">
-		<h3>Enter your postcode here to find your nearest CaSSOA site</h3>
+		<h3>Enter your <span class="decoration">FULL</span> postcode here to find your nearest CaSSOA site:</h3>
 		<form id="member-search-form">
 			<div class="row-search">
 				<input type="hidden" name="member-serach" value="true">
@@ -96,11 +102,11 @@ var mtitles = new Array();
 					</select>
 				</div>
 			</div>
-			<p>Or search by sitename <span class="decoration">or</span> county:</p>
+			<p>Or search by site name, county <span class="decoration">or</span> city:</p>
 			<div class="row-search site-name-row">
 				<input style="width: 230px" type="text" name="s_sitename" placeholder="Site name" value="<?php echo $_GET['s_sitename']; ?>">
 				<input style="width: 230px" type="text" name="s_county" placeholder="County" value="<?php echo $_GET['s_county']; ?>">
-				<input type="text" name="s_city" placeholder="City" value="<?php echo $_GET['s_city']; ?>">
+				<input type="text" name="s_city" placeholder="Town/City" value="<?php echo $_GET['s_city']; ?>">
 			  <input type="submit" value="Search">
 			</div>
 		</form>
@@ -113,8 +119,11 @@ var mtitles = new Array();
 	<?php if ($_GET['member-serach'] == 'true') { ?>
 	<section class="result-boxes">
 		<h3>Here are your results</h3>
-		<?php if ($members) { ?>
-			<?php foreach($members as $member) { ?>
+		<?php if ($members && $members_data) { ?>
+			<?php 
+			foreach($members_data as $id => $member_data) { 
+				$member = getMemberByID($members, $id);
+			?>
 			<div class="box">
 				<img src="<?php echo TDU ?>/images/ico-<?php echo $members_data[$member->ID]['cassoa_award']; ?>-award.png" alt=" ">
 				<div class="text">

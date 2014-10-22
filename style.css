@@ -595,13 +595,70 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{
 .btn-green:hover{
 	background-position:0 -66px;
 }
+.home-twocolumns{
+	padding:0 0 0 24px;
+}
 .home-text{
-	padding:5px 19px;
+	float: left;
+	width: 670px;
 	color:#333;
+	padding: 18px 0 0;
 	font: 13px/16px Arial, Helvetica, sans-serif;
 }
 .home-text p{
 	margin:0 0 14px;
+}
+.aside-twitter{
+	float: right;
+	width: 243px;
+	border: 2px solid #e1e1e1;
+	padding: 22px 22px 10px 22px;
+}
+.aside-twitter h3{
+	color: #381460;
+	font: bold 18px/22px Arial,Helvetica,sans-serif;
+	margin: 0 0 14px;
+}
+.tweet-list{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	color:#333;
+	font: 12px/15px Arial, Helvetica, sans-serif;
+}
+.tweet-list li{
+	border-top: 1px solid #c9d64a;
+	padding: 11px 0;
+}
+.tweet-list li:first-child{
+	border: none;
+	padding-top: 0;
+}
+.tweet-list li a{
+	color: #381460;
+	text-decoration: none;
+}
+.tweet-list li a:hover{
+	text-decoration: underline;
+}
+.tweet-list li p{
+	margin: 0;
+}
+.tweet-list h4{
+	margin: 0;
+	font: bold 13px/16px Arial,Helvetica,sans-serif;
+}
+.aside-twitter .btn-holder{
+	text-align: right;
+}
+.aside-twitter .btn-holder a{
+	display: inline-block;
+	vertical-align: top;
+	color: #fff;
+	background: #c9d64a;
+	padding: 0 8px;
+	font: bold 12px/17px Arial,Helvetica,sans-serif;
+	text-decoration: none;
 }
 #footer{
 	background:#e5e5e5;
@@ -1374,7 +1431,8 @@ form.member-profile-contact textarea.error{
 #main:after,
 .post:after,
 #sidebar .aside:after,
-#your-profile:after{
+#your-profile:after,
+.home-twocolumns:after{
 	content:'';
 	display:table;
 	clear:both;

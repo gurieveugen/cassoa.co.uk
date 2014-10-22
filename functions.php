@@ -107,6 +107,7 @@ function new_excerpt_more( $more ) {
 add_filter('excerpt_more', 'new_excerpt_more');
 
 function get_thumb($attach_id, $width, $height, $crop = false) {
+	if(is_wp_error($attach_id)) return '';
 	if (is_numeric($attach_id)) {
 		$image_src = wp_get_attachment_image_src($attach_id, 'full');
 		$file_path = get_attached_file($attach_id);
@@ -263,6 +264,7 @@ function get_search_members($params) {
 						if (!in_array($mpostcode, $member_postcodes)) 
 						{
 							$member_postcodes[] = $mpostcode;
+							// var_dump(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'postcode' AND REPLACE(um2.meta_value, ' ', '') = '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', $mpostcode, $limit));
 							$smembers = $wpdb->get_results(sprintf("SELECT u.* FROM %susers u LEFT JOIN %susermeta um ON um.user_id = u.ID LEFT JOIN %susermeta um2 ON um2.user_id = u.ID WHERE um.meta_key = 'wp_capabilities' AND (um.meta_value LIKE '%s' OR um.meta_value LIKE '%s') AND um2.meta_key = 'postcode' AND REPLACE(um2.meta_value, ' ', '') = '%s' GROUP BY u.ID ORDER BY um2.meta_value ASC LIMIT 0, %s", $wpdb->prefix, $wpdb->prefix, $wpdb->prefix, '%subscriber%', '%s2member_level%', $mpostcode, $limit));
 							if ($smembers) 
 							{
@@ -302,4 +304,44 @@ function get_search_members($params) {
 	}
 
 	return $members;
+}
+
+/**
+ * Sort members data by field
+ * @param  array $arr    --- members data 
+ * @param  string $field --- field name
+ * @return array         --- sorted members data by field
+ */
+function sortMembersData($arr, $field = 'site_name')
+{
+	$new_arr = array();
+	$res_arr = array();
+
+	if(!is_array($arr) OR !count($arr)) return $arr;
+	foreach ($arr as $key => $value) 
+	{
+		$new_arr[$key] = $value[$field];	
+	}
+	asort($new_arr);
+
+	foreach ($new_arr as $key => $value) 
+	{
+		$res_arr[$key] = $arr[$key];
+	}
+	return $res_arr;
+}
+
+/**
+ * Get member by his ID
+ * @param  array $members --- members
+ * @param  integer $ID    --- ID
+ * @return mixed          --- if succes return member | flase if not
+ */
+function getMemberByID($members, $ID)
+{
+	foreach ($members as $key => $value) 
+	{
+		if($value->ID == $ID) return $value;
+	}
+	return false;
 }

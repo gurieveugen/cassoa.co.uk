@@ -118,7 +118,10 @@ $member_data = get_userdata($member);
 						<?php echo $member_customs['postcode']; ?>
 					</p>
 				</div>
-				<?php if (strlen($member_customs['phone'])) { ?><p><strong>Telephone:</strong> <?php echo $member_customs['phone']; ?></p><?php } ?>
+				<?php if (strlen($member_customs['phone'])) { ?><p><strong>Telephone:</strong> <?php echo $member_customs['phone']; ?></p>
+				<?php } ?>
+                <!--<?php if (strlen($member_customs['phone'])) { ?>
+                <p><strong>Mobile:</strong> <?php echo $member_customs['mobile']; ?></p><?php } ?>-->
 				<?php if (strlen($member_data->user_url)) { ?><p><strong>Website:</strong><br><a href="<?php echo $member_data->user_url; ?>" target="_blank"><?php echo str_replace(array('http://', 'https://'), '', $member_data->user_url); ?></a></p><?php } ?>
 				<?php if (strlen($member_customs['contact_names'])) { $contact_names = str_replace(chr(13), '', trim($member_customs['contact_names'])); ?><p><strong>Contact names:</strong><br><?php echo str_replace(chr(10), ', ', $contact_names); ?></p><?php } ?>
 				<?php if (strlen($member_customs['membership_no'])) { ?><p><strong>Membership No.</strong> <?php echo $member_customs['membership_no']; ?></p><?php } ?>

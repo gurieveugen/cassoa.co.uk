@@ -176,6 +176,10 @@ function caravan_theme_options_page() {
 			<td>Find Site results number:&nbsp;</td>
 			<td><input type="text" name="find_site_per_page" value="<?php echo htmlspecialchars($caravan_theme_options['find_site_per_page']); ?>" style="width:40px;"></td>
 		  </tr>
+		  <tr>
+			<td>Twitter account:&nbsp;</td>
+			<td><input type="text" name="twitter_account" value="<?php echo htmlspecialchars($caravan_theme_options['twitter_account']); ?>" style="width:400px;"></td>
+		  </tr>
 
 		</table>
 
